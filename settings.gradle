@@ -1,0 +1,2 @@
+rootProject.name='Firebase2020Prueba'
+include ':app'
