@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var picker: PickerImage
     private lateinit var mStorageRef: StorageReference
 
-    val currentUser = FirebaseAuth.getInstance().currentUser
+
 
     companion object {
         const val REQUEST_PERMISSION = 200
@@ -135,6 +135,7 @@ class MainActivity : AppCompatActivity() {
     private fun subirFoto(
         data: Intent?
     ) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
         val progress = indeterminateProgressDialog("subiendo foto, espera")
         val storageRef = mStorageRef.storage.reference
 
@@ -187,7 +188,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun optionsDialog(){
-
+        val currentUser = FirebaseAuth.getInstance().currentUser
         optiondialog = alert {
             if(mAuth.currentUser == null){
 
@@ -209,6 +210,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }else{
+
                 title="¡Bienvenido ${mAuth.currentUser?.displayName}!"
                 //imagen potencial
                 customView{
