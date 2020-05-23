@@ -63,7 +63,33 @@ class MainActivity : AppCompatActivity() {
         title="Categorias"
 
     }
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = mAuth.currentUser
+        if(currentUser==null){
+            signInAnonimously()
+        }
+    }
 
+    private fun signInAnonimously() {
+        mAuth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInAnonymously:success")
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInAnonymously:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+
+                }
+
+                // ...
+            }
+    }
 
 
     private fun initRV() {
@@ -190,7 +216,7 @@ class MainActivity : AppCompatActivity() {
     private fun optionsDialog(){
         val currentUser = FirebaseAuth.getInstance().currentUser
         optiondialog = alert {
-            if(mAuth.currentUser == null){
+            if(mAuth.currentUser?.displayName == null){
 
                 title = "¡Bienvenido a Preguntame!"
                 customView{
