@@ -1,9 +1,12 @@
 package net.azarquiel.firebase2020prueba.view
 
+import android.graphics.drawable.Icon
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toIcon
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -17,6 +20,7 @@ import net.azarquiel.firebase2020prueba.R
 
 import kotlinx.android.synthetic.main.activity_respuestas.*
 import kotlinx.android.synthetic.main.content_respuestas.*
+import kotlinx.android.synthetic.main.rowcomentarios.view.*
 import net.azarquiel.firebase2020prueba.adapter.CustomAdapterComentarios
 import net.azarquiel.firebase2020prueba.model.Preguntas
 import net.azarquiel.firebase2020prueba.model.Respuestas
@@ -129,9 +133,29 @@ class RespuestasActivity : AppCompatActivity() {
     private fun initRV() {
         tvTituloRes.text = thispregunta.titulo
         tvDesc.text = thispregunta.desc
+        ponerImagenCabecera()
         adapter = CustomAdapterComentarios(this, R.layout.rowcomentarios, mStorageRef)
         rvComentarios.adapter = adapter
         rvComentarios.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun ponerImagenCabecera() {
+        var photoRef = mStorageRef.child("images/${thispregunta.idowner}.jpg")
+        val ONE_MEGABYTE: Long = 1024 * 1024
+        if(photoRef != null){
+            photoRef.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+                // Data for "images/island.jpg" is returned, use this as needed
+                val icon: Icon = it.toIcon()
+                //solo esta disponible en api 23 pa arriba
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    ivOwnerPregunta.setImageIcon(icon)
+                }
+            }.addOnFailureListener {
+                // Handle any errors
+            }
+        }else{
+            ivOwnerPregunta.setImageResource(R.drawable.noimage)
+        }
     }
 
 }
