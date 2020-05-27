@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
     private fun optionsDialog(){
         val currentUser = FirebaseAuth.getInstance().currentUser
         optiondialog = alert {
-            if(mAuth.currentUser?.displayName == null){
+            if(mAuth.currentUser!!.isAnonymous){
 
                 title = "¡Bienvenido a Preguntame!"
                 customView{

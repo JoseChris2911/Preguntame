@@ -45,7 +45,7 @@ class PreguntaActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         setListener()
 
         fab.setOnClickListener { view ->
-            if(mAuth.currentUser?.displayName == null){toast("Logeate para usar esta funcion")}else{añadirPregunta()}
+            if(mAuth.currentUser!!.isAnonymous){toast("Logeate para usar esta funcion")}else{añadirPregunta()}
         }
     }
 

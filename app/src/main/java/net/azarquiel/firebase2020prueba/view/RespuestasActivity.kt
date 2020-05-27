@@ -42,7 +42,7 @@ class RespuestasActivity : AppCompatActivity() {
         setListener()
         title=""
         fab.setOnClickListener { view ->
-            if(mAuth.currentUser?.displayName == null){
+            if(mAuth.currentUser!!.isAnonymous){
                 toast("Logeate para usar esta funcion")
             }else{
                 addRespuestaDialog()
